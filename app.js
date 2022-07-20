@@ -2,19 +2,23 @@ const { readFileSync } = require('fs');
 const http = require('http');
 const https = require('https');
 const fs = require('fs')
-const lib = require("./lib/operation")
-lib.delete ('data','newFile', function(err){
-  if(!err){
-      console.log("done")
-  }
-  else{
-    console.log(err)
-  }
-})
- 
 const { StringDecoder } = require('string_decoder');
 const url =require ('url')
 let config= require ('./config')
+ 
+const lib = require("./lib/operation")
+ lib.read ('data','prs', function(data){
+  if(!data){
+      console.log("no data")
+  }
+  else{
+    const buff = Buffer.from(data, 'base64');
+ 
+    console.log(data)
+    
+  }
+})
+ 
 
 
 //instatiating the https server 
@@ -77,6 +81,8 @@ chosenHandle(data,function(statusCode,payload){
     }
   });
   res.setHeader("Content-Type","application/json")
+  
+  res.setHeader("Content-Type","application/docx")
   res.writeHead(statusCode);
   res.end(payloadString)
 }) 
