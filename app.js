@@ -3,18 +3,20 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs')
 const { StringDecoder } = require('string_decoder');
-const url =require ('url')
-let config= require ('./config')
+const url =require ('url');
+const cli = require ("./lib/cli")
+ const config = require("./config")
+const lib = require("./lib/operation");
  
-const lib = require("./lib/operation")
  lib.read ('data','prs', function(data){
   if(!data){
       console.log("no data")
   }
   else{
     const buff = Buffer.from(data, 'base64');
- 
-    console.log(data)
+    data= data.toString()
+          const index= data.indexOf("Author")
+    console.log(index)
     
   }
 })
@@ -120,10 +122,14 @@ const handle ={};
    //listen of the https server
    httpsServer.listen(config.httpsPort,()=>{
     console.log('server is listening on port ' + config.httpsPort + " in " + config.envName + " mode")
-    console.log(config)
+    setTimeout(function(){
+      cli.init()
+    },50)
    })
 
    //defining the router
    const route = {
     "ping" :handle.ping
   }
+
+  
